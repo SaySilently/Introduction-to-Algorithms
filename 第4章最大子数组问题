@@ -1,0 +1,56 @@
+暴力求解方法
+  简单地尝试每对可能或卖出的日期组合，只要卖出日期在买入日期之后即可。
+  O(n^2)
+  
+使用分治策略的求解方法
+  假定我们要寻找子数组[low..high]的最大子数组，使用分治技术意味着我们要将子数组划分为两个规模尽量相等
+的子数组，也就是说，找到子数组的中央位置mid，然后考虑求解两个子数组A[low..mid]和A[mid+1..high]，则
+A[low..high]的任何连续子数组A[i..j]所处的位置必然是以下三种情况之一：
+    1.完全位于子数组A[low..mid], low <= i <= j <= mid
+    2.完全位于子数组A[mid+1..high], mid < i <= j <= high
+    3.跨越了中点, low <= i <= mid < j <= high
+    实际上，最大子数组必然是完全位于A[low..mid]，完全位于A[mid+1..high]或跨越了中点的所有子数组中和
+    最大者。
+  我们可以递归地求解A[low..mid]和A[mid+1..high]的最大子数组，因为这两个子问题仍是最大子数组问题，只
+  是规模更小，剩下的全部工作就是寻找跨越中点的最大子数组，然后在三种情况中选择和最大者。
+  
+  伪代码
+    FIND-MAX-CROSSING-SUBARRAY(A, low, mid, high)
+      left-sum = -infinite
+      sum = 0
+      for i = mid downto low
+        sum = sum + A[i]
+        if sum > left-sum
+          left-sum = sum
+          max~left = i
+      right-sum = -infinite
+      sum = 0
+      for j = mid+1 to high
+        sum = sum + A[j]
+        if sum > right-sum
+          right-sum = sum
+          max~right = j
+    return (max~left, max~right, left-sum + right-sum)
+    
+    FIND-MAXIMUM-SUBARRAY(A, low, high)
+      if high == low
+        return (low, high, A[low])
+      else 
+        mid = (low + high) / 2
+        (left-low, left-high, left-sum) = FIND-MAXIMUM-SUBARRAY(A, low, mid)
+        (right-low, right-high, right-sum) = FIND-MAXIMUM-SUBARRAY(A, mid+1, high)
+        (cross-low, cross-high, cross-sum) = FIND-MAX-CROSSING-SUBARRAY(A, low, mid, high)
+        
+        if left-sum >= right-sum and left-sum >= cross-sum
+          return (left-low, left-high, left-sum)
+        else if right-sum >= left-sum and right-sum >= cross-sum
+          return (right-low, right-high, right-sum)
+        else 
+          return (cross-low, cross-high, cross-sum)
+          
+时间复杂度
+  O(nlogn)
+        
+        
+        
+        
