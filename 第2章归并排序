@@ -45,25 +45,33 @@
         
 ANSI C:
   void merge(int* array, int left, int half, int right)
-  {
-    int length = right - left + 1； 
-    int array_copy[length]；
+	{
+    int length = right - left + 1;
+    int array_copy[length];
     int i = 0;
     for(i = 0; i < length; ++i){
-      array_copy[i] = array[left + i];
+        array_copy[i] = array[left + i];
     }
-    int j,k;
-    for(j = 0; j < half + 1;){
-      for(k = half + 1; k < length); ){
+    
+    int j = 0;
+    int half_length = (0 + length - 1) / 2;
+    int k = half_length + 1;
+    
+    while(j <= half_length && k < length){
         if(array_copy[j] < array_copy[k]){
-          array[left++] = array_copy[j++];
+            array[left++] = array_copy[j++];
         }
         else{
-          array[left++] = array_copy[k++];
+            array[left++] = array_copy[k++];
         }
-      }
     }
-  }
+    while (j <= half_length) {
+        array[left++] = array_copy[j++];
+    }
+    while (k < length) {
+        array[left++] = array_copy[k++];
+    }
+	}
   void merge_sort(int* array, int left, int right)
   {
     if(left < right){
