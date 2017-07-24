@@ -27,4 +27,4 @@ SQUARE-MATRIX-MULTIPLY（A, B）
      return C
 
 Strassen算法
-  太复杂
+  太复杂，但矩阵乘法的时间复杂度从O(n^3)降到O(n^2.81)
