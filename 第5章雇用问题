@@ -1,0 +1,18 @@
+伪代码
+  HIRE-ASSISTANT(n)
+    best = 0 //candidate 0 is a least-qualified dummy candidate
+    for i = 1 to n
+      interview candidate i
+       if candidate i is better than candidate best
+        best = i
+        hire candidate i
+       
+  ON-LINE-MAXIMUM(k, n)
+    bestscore = -infinite
+    for i = 1 to k
+      if score(i) > bestscore
+        bestscore = score(i)
+    for i = k + 1 to n
+      if score(i) > bestscore
+        return i
+    return n
