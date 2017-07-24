@@ -1,0 +1,27 @@
+矩阵乘法
+SQUARE-MATRIX-MULTIPLY（A, B）
+  n = A.rows
+  let C be a new n X n matrix
+  for i = 1 to n
+    for j = 1 to n
+      Cij = 0
+      for k = 1 to n
+        Cij = Cij + Aik X Bkj
+  return C 
+  
+  一个简单的分治算法
+  SQUARE-MATRIX-MULTIPLY-RECURSIVE(A, B)
+    n = A.rows
+    let C be a new n X n matrix
+    if n == 1
+      C11 = A11 X B11
+    else partition A, B, and C as in equations(4.9)
+      C11 = SQUARE-MATRIX-MULTIPLY-RECURSIVE(A11, B11)
+          + SQUARE-MATRIX-MULTIPLY-RECURSIVE(A12, B21)
+      C12 = SQUARE-MATRIX-MULTIPLY-RECURSIVE(A11, B12)
+          + SQUARE-MATRIX-MULTIPLY-RECURSIVE(A12, B22)
+      C21 = SQUARE-MATRIX-MULTIPLY-RECURSIVE(A21, B11)
+          + SQUARE-MATRIX-MULTIPLY-RECURSIVE(A22, B21)
+      C22 = SQUARE-MATRIX-MULTIPLY-RECURSIVE(A21, B12)
+          + SQUARE-MATRIX-MULTIPLY-RECURSIVE(A22, B22)
+     return C
