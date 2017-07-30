@@ -1,0 +1,23 @@
+计数排序
+  计数排序的思想是:对每一个输入元素x,确定小于x的元素个数，利用这一信息，直接确定x的位置
+  当有几个元素相同时，这一方案要修改，因为不能把它们放在同一个位置。
+  
+在计数排序的代码中，假设输入是一个数组A[1..n],A.length = n, 我们还需要两个数组：
+B[1..n]存放排序的输出，C[0..k]提供临时存储空间。
+COUNTING-SORT(A, B, k)
+  let C[0..k] be a new array
+  for i = 0 to k
+    C[i] = 0
+  for j = 1 to A.length
+    C[A[j]] = C[A[j]] + 1
+  //C[i] now contains the number of elements equal to i
+  for i = 1 to k
+    C[i] = C[i] + C[i-1]
+  //C[i] now contains the number of elements less than or equal to i
+  for j = A.length downto 1
+    B[C[A[j]]] = A[j]
+    C[A[j]] = C[A[]j] - 1
+ 时间复杂度：O(n)
+ 
+ 计数排序的一个重要性质就是它是稳定的：具有相同值的元素在输出数组中的相对次序与它们在输入数组中的相对次序相同。
+ 计数排序经常被用作基数排序得子过程，为了使基数排序正确，计数排序必须是稳定的。
