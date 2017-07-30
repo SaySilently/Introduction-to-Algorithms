@@ -1,0 +1,49 @@
+与归并排序相同，但不同于插入排序的是：堆排序的时间复杂度是O(nlgn)
+与插入排序相同，但不同于归并排序的是：堆排序同样具有空间原址性：任何时候都只需要常数个额外的元素空间存储临时数据。
+因此，堆排序集合了我们目前已经讨论的两种排序算法的优点。
+
+堆是一个数组，表示堆的数组A包括两个属性：A.length给出数组元素的个数，A.heap-size表示有多少堆元素存储在数组中。
+0 <= A.heap-size <= A.length,树的根节点是A[1],这样给定一个节点的下标i，我们可以很容易计算得到它的父节点，左
+孩子和右孩子的下标：
+  PARENT（i）
+    return i/2
+  LEFT(i)
+    return 2i
+  RIGHT(i)
+    return 2i + 1
+    
+二叉堆可以分为两种形式：最大堆和最小堆。
+在最大堆中：A[PARENT(i)] >= A[i]
+在最小堆中：A[PARENT(i)] <= A[i]
+堆排序中使用最大堆，最小堆通常用于构造优先队列。
+一个包含n个节点的堆可以看作一颗完全二叉树，那么堆的高度是lgn
+
+MAX-HEAPIFY（A, i）
+  l = LEFT(i)
+  r = RIGHT(i)
+  if l <= A.heap-size and A[l] > A[i]
+    largest = l
+  else largest = i
+  if r <= A.heap-size and A[r] > A[largest]
+    largest = r
+  if largest != i
+    exchange A[i] with A[largest]
+    MAX-HEAPIFY(A,largest)
+时间复杂度：O(h) = O(lgn)
+
+BUILD-MAX-HEAP(A)
+  A.heap-size = A.length
+  for i = A.length / 2 downto 1
+    MAX-HEAPIFY(A, i)
+时间复杂度：O(n)
+
+堆排序算法
+HEAPSORT(A)
+  BUILD-MAX-HEAP(A)
+  for i = A.length downto 2
+    exchange A[1] with A[i]
+    A.heap-size = A.heap-size - 1
+    MAX-HEAPIFY(A, 1)
+时间复杂度：O(nlgn)
+
+
