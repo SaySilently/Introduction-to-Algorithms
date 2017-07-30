@@ -1,0 +1,42 @@
+堆这一数据结构有很多应用，堆的一个常见应用：优先队列。
+优先队列也有两种形式，最大优先队列和最小优先队列。
+
+优先队列（priority queue）是一种用来维护由一组元素构成集合S的数据结构，其中的每一个元素都有一个相关的值，
+称为关键字（key)。一个最大优先队列支持以下操作：
+  INSERT(S, x)：把元素x插入集合S中
+  MAXIMUM(S):返回S中具有最大键字的元素
+  EXTRACT-MAX(S):去掉并返回S中的具有最大关键字的元素
+  INCREASE-KEY(S, x, k):将元素x的关键字值增加到k,k >= x
+  应用：共享计算机系统的作业调度
+最小优先队列可以被用于基于事件驱动的模拟器。
+
+如何实现最大优先队列的操作：
+HEAP-MAXIMUM(A)
+  return A[1]
+  
+HEAP-EXTRACT-MAX(A)
+  if A.heap-size < 1
+    error "heap underflow"
+  max = A[1]
+  A[1] = A[A.heap-size]
+  A.heap-size = A.heap-size - 1
+  MAX-HEAPIFY(A, 1)
+  return max
+时间复杂度：O(lgn)
+  
+HEAP-INCREASE-KEY(A, i, key)
+  if key < A[i]
+    error "new key is smaller than current key"
+  A[i] = key
+  while i > 1 and A[PARENT(i)] < A[i]
+    exchange A[i] with A[PARENT(i)]
+    i = PARENT(i)
+时间复杂度：O(lgn)
+
+MAX-HEAP-INSERT(A, key)
+  A.heap-size = A.heap-size + 1
+  A[A.heap-size] = -infinite
+  HEAP-INCREASE-KEY(A, A.heap-size, key)
+时间复杂度：O(lgn)
+
+总之，在一个包含n个元素的堆中，所有优先队列的操作都可以在O(lgn)时间内完成
