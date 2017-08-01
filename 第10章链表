@@ -1,0 +1,24 @@
+LIST-SEARCH(L, k)
+  x = L.head
+  while x ！= NIL and x.key != k
+    x = x.next
+  return x
+ 
+LIST-INSERT(L, x)
+  x.next = L.head
+  if L.head != NIL
+    L.head.prev = x
+  L.head = x
+  x.prev = NIL
+  
+LIST-DELETE(L, x)
+  if x.prev != NIL
+    x.prev.next = x.next
+  else
+    L.head = x.next
+  if x.next != NIL
+    x.next.prev = x.prev
+    
+哨兵（sentinel）
+  哨兵基本不能降低数据结构相关操作的渐进时间界，但可以降低常数因子，
+  好处在于使代码简洁，而非提高速度，多占用的额外的存储空间会造成存储浪费。
