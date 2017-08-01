@@ -1,0 +1,97 @@
+直接寻址法
+  DIRECT-ADRESS-SEARCH(T, k)
+    return T[k]
+    
+   DIRECT-ADDRESS-INSERT(T, x)
+    T[x.key] = x
+    
+   DIRECT-ADDRESS_DELETE(T, x)
+    T[x.key] = NIL
+  直接寻址法的缺点非常明显：如果全域U很大，则在一台标准的计算机可用内存容量中，要存储大小为|U|的一张表T也许不太实际，
+  甚至是不可能的，还有，实际存储的关键字集合K相对于U来说可能很小，是的分配给T的大部分空间浪费掉。
+  
+散列表
+  在直接寻址方式中，具有关键字k的元素被存放在槽k中，在散列方式下，该元素存放在槽h(k)中，即利用散列函数（hash function）h,
+有关键字k计算出槽的位置。
+  这里存在一个问题，两个关键字可能映射到同一个槽中，冲突（collision)
+  通过链接法（chaining）解决冲突：把散列到同一个槽中的所有元素放在一个链表中。
+    CHAINED-HASH-INSERT(T, x)
+      insert x at the head of list T[h(x.key)]
+      
+    CHAINED-HASH-SEARCH(T, k)
+      search for an element with key k in list T[h(k)]
+      
+    CHAINED-HASH-DELETE(T, x)
+      delete x from the list T[h(x.key)]
+    散列方法的平均性能依赖于所选取的散列函数h.
+    好的散列函数的特点：
+    1. 满足简单均匀散列假设：每个关键字都被等可能地散列到m槽位中的任何一个，并与其它关键字已散列到哪个槽位无关。
+    2. 将相近符号散列到相同槽中的可能性最小
+    3. 一种好的方法导出的散列值，在某种程度上应独立于数据可能存在的任何模式
+    4. 可能某些近似的关键字有截然不同的散列值
+    除法散列法：
+    通过取k除以m的余数，将关键字k映射到m个槽中的某一个上。
+    当应用除法散列法时，要避免选择m的某些值，如m不应为2的幂。一个不太接近2的整数幂的素数，常常是m的一个较好的选择。
+    乘法散列法：
+    1. 用关键字k乘上常数A(0<A<1), 并提取kA的小数部分
+    2. 用m乘以这个值，再向下取整
+    优点是对m的选择不是特别关键，一般选择它为2的某个幂次
+    全域散列法（universal hashing）：随机地选择散列函数，使之独立于要存储的关键字。
+    
+  通过开放寻址法（open addressing）处理冲突：所有的元素都存放在散列表里。好处是不用指针，而是计算要存取的槽序列。
+  于是，不用存储指针而节省空间，使得可以用同样的空间来提供更多的槽，潜在地减少了冲突，提高了检索效率。
+    HASH-INSERT(T, k)
+      i = 0
+      repeat 
+        j = h(k, i)
+        if T[j] == NIL
+          T[j] = k
+          return j
+        else
+          i = i + 1
+      until i == m
+      error "hash table overflow"
+      
+    HASH-SEARCH(T, K)
+      i = 0
+      repeat
+        j = h(k, j)
+        if T[j] == k
+          return j
+        i = i + 1
+      until T[j] == NIL or i == m
+      return NIL
+    均匀散列m!
+      线性探查（linear probing）：h(k, i) = (h'(k) + i) mod m
+      二次探查（quadratic probing): h(k, i) = (h'(k) + ai + bi^2) mod m
+      双重散列（double hashing）: h(k, i) = (h'(k) + ih''(k)) mod m
+        为了查找整个散列表，h''(k)要与表的大小互素。一种方法是取m为2的幂，并设计一个总产生奇数的h''，
+        另一种方法是取m为素数，并设计一个总是返回较m小的正整数的函数h''
+
+完全散列（perfect hashing）
+  采用两级的散列方法来设计完全散列：
+    第一级与带链接的散列基本一样，利用从某一全域散列函数中仔细挑选出一个散列函数，将n个关键字散列到m个槽中。
+    然而，我们采用一个较小的二次散列表（secondary hash table）Sj及相关的散列函数，而不是将散列到槽j中的
+    所有关键字建立一个链表。利用精心选择的hj确保在第二级上不出现冲突。
+    但是为了确保第二级不冲突，需要让散列表Sj的大小mj为散列到槽j中的关键字数nj的平方。
+      
+      
+      
+      
+      
+      
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
