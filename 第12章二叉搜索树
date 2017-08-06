@@ -51,3 +51,43 @@ TREE-SUCCESSOR(x)
 时间复杂度：O(lgn)
 搜索，最大最小，前驱后继都是O(h)
 
+插入和删除
+TREE-INSERT(T, x)
+  y = NIL
+  x = T.root
+  while x != NIL
+    y = x
+     if z.key < x.key
+      x = x.left
+    else x = x.right
+  z.p = y
+  if y == NIL
+    T.root = z
+  elseif z.key < y.key
+    y.left = z
+  else y.right = z
+  
+TRANSPLANT（T, u, v） //用以v为根的子树来替代以u为根的子树
+  if u.p == NIL
+    t.root = v
+  elseif u == u.p.left
+    u.p.left = v
+  else u.p.right = v
+  if v != NIL
+    v.p = u.p
+
+TREE-DELETE(T, z)
+  if z.left == NIl
+    TRANSPLANT(T, z, z.right)
+  elseif z.right == NIL
+    TRANSPLANT(T, z, z.right)
+  else y = TREE-MINIMUN(z.right)
+    if y.p != z
+      TRANSPLANT(T, y, y.right)
+      y.right = z.right
+      y.right.p = y
+    TRANSPLANT(T, z, y)
+    y.left = z.left
+    y.left.p = y
+插入删除时间复杂度皆为O(h)
+
