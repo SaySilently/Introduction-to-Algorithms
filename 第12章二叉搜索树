@@ -26,7 +26,7 @@ ITERATIVE-TREE-SEARCH(x, k)
       x = x.left
     else x = x.right
   return x
-时间复杂度：O(lgn)
+时间复杂度：O(h)
 
 最大关键字元素和最小关键字元素
 TREE-MINIMUM(x)
@@ -37,7 +37,7 @@ TREE-MAXIMUM(x)
   while x.right != NIL
     x = x.right
   return x
-时间复杂度：O(lgn)
+时间复杂度：O(h)
 
 后继和前驱
 TREE-SUCCESSOR(x)
@@ -48,7 +48,7 @@ TREE-SUCCESSOR(x)
     x = y
     y = y.p
   return y
-时间复杂度：O(lgn)
+时间复杂度：O(h)
 搜索，最大最小，前驱后继都是O(h)
 
 插入和删除
