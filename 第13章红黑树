@@ -1,0 +1,72 @@
+红黑树
+  红黑树是一颗搜索二叉树，它在每个结点上增加一个存储位来表示结点的颜色，可以使RED或BLACK.通过对任何一条从根到叶子的简单路径
+上各个结点的颜色进行约束，红黑树确保没有一条路径会比其他路径长出2倍，因而是近似于平衡的。如果一个结点没有子结点或结点，则该结
+点相应指针属性值为NIL。我们可以把这些NIL视为指向二叉搜索树的叶结点（外部结点）的指针，而把关键字的结点视为树的内部结点。
+
+一颗红黑树是满足下面红黑性质的二叉搜索树：
+  1. 每个结点或是红色的，或是黑色的
+  2. 根结点是黑色的
+  3. 每个叶结点（NIL）是黑色的
+  4. 如果一个结点是红色的，则它的两个子结点都是黑色的
+  5. 对每个结点，从该结点到其所有后代叶结点的简单路径上，均包含相同树木的黑色结点。  
+  一颗有n个内部结点的红黑树至多为2lg(n+1)
+
+旋转
+  LEFT-ROTATE(T, x)
+    y = x.right       
+    x.right = y.left    // turn y's left subtree into x's right subtree 
+    if y.left != T.nil
+      y.left.p = x
+    y.p = x.p           // link x's parent to y
+    if x.p == T.nil
+      T.root = y
+    elseif x == x.p.left
+      x.p.left = y
+    else x.p.right = y
+    y.left = x          // put x on y's left
+    x.p = y
+时间复杂度：O(1)
+
+插入
+  RB-INSERT(T, z)
+    y = T.nil
+    x = T.root
+    while x != T.nil
+      y = x
+      if z.key < x.key
+        x = x.left
+      else x = x.right
+    z.p = y
+    if y == T.nil
+      T.root = z
+    elseif z.key < y.key
+      y.left = z
+    else y.right = z
+    z.left = T.nil
+    z.right = T.nil
+    z.color = RED
+  
+  RB-INSERT-FIXUP(T, z)
+    while z.p.color == RED
+      if z.p == z.p.p.left
+        y = z.p.p.right
+        if y.color == RED
+          z.p.color = BLACK
+          y.color = BLACK
+          z.p.p.color = RED
+          z = z.p.p
+        elseif z == z.p.right
+          z = z.p
+          LEFT-ROTATE(T, z)
+        z.p.color = BLACK
+        z.p.p.color = RED
+        RIGHT-ROTATE(T, z.p.p)
+      else (same as then clause with "right" and "left" exchange)
+    T.root.color = BLACK
+  红黑树复杂。。。。。
+  
+  
+  
+  
+  
+  
